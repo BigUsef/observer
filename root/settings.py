@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # Third-Party packages
+    'rest_framework',
     # Project installed apps
     'authentication.apps.UsersConfig',
     'corporations.apps.CorporationsConfig',
@@ -145,6 +147,18 @@ STATICFILES_DIRS = [
 
 
 # Email settings
-
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+
+# Django Rest Framework Settings
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': ['utilities.restful.renderers.JSONRenderer'],
+    'DEFAULT_PARSER_CLASSES': ['rest_framework.parsers.JSONParser'],
+    'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.IsAuthenticated'],
+    'DEFAULT_AUTHENTICATION_CLASSES': ['utilities.restful.authentication.TokenAuthentication'],
+    'DEFAULT_VERSIONING_CLASS': 'utilities.restful.versioning.APIHeaderVersioning',
+    'DEFAULT_PAGINATION_CLASS': 'utilities.restful.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,
+    'EXCEPTION_HANDLER': 'utilities.restful.exceptions.exception_handler',
+}
