@@ -16,7 +16,7 @@ from authentication.managers import UserManager
 class User(AbstractBaseUser, PermissionsMixin):
     username_validator = RegexValidator(
         regex='^[a-z_]*$',
-        message=_('Enter a valid UserName consisting of lowercase letters or underscores.'),
+        message=_('Enter a valid Username consisting of lowercase letters or underscores.'),
         code='invalid'
     )
 
@@ -26,7 +26,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         max_length=50,
         unique=True,
         db_index=True,
-        help_text=_('Required. 50 characters or fewer. only contain lowercase letters or underscores.'),
+        help_text='Required. 50 characters or fewer. only contain lowercase letters or underscores.',
         validators=[username_validator],
         error_messages={
             'unique': _('A user with that username already exists.'),
@@ -36,34 +36,31 @@ class User(AbstractBaseUser, PermissionsMixin):
         _('email address'),
         unique=True,
         db_index=True,
-        help_text=_('Required. valid email must be provided to use when contact with user.'),
+        help_text='Required. valid email must be provided to use when contact with user.',
         error_messages={
             'unique': _('A user with that email address already exists.'),
         },
     )
 
-    first_name = models.CharField(_('first name'), max_length=30, blank=True)
-    last_name = models.CharField(_('last name'), max_length=90, blank=True)
+    first_name = models.CharField('first name', max_length=30, blank=True)
+    last_name = models.CharField('last name', max_length=90, blank=True)
 
-    token = models.CharField(_("token"), max_length=50, db_index=True, blank=True)
+    token = models.CharField("auth token", max_length=50, db_index=True, blank=True)
     is_staff = models.BooleanField(
-        _('staff status'),
+        'staff status',
         default=False,
         help_text=_('Designates whether the user can log into this admin site.'),
     )
     is_active = models.BooleanField(
-        _('active status'),
+        'active status',
         default=True,
-        help_text=_(
-            'Designates whether this user should be treated as active. '
-            'Unselect this instead of deleting accounts.'
-        ),
+        help_text='Designates whether this user should be treated as active. Unselect this instead of deleting accounts.'
     )
-    date_joined = models.DateTimeField(_('date joined'), auto_now_add=True)
+    date_joined = models.DateTimeField('date joined', auto_now_add=True)
     is_verified = models.BooleanField(
-        _('Has Verified Account'),
+        'Has Verified Account',
         default=False,
-        help_text=_('Designates whether this user has completed sign up process.')
+        help_text='Designates whether this user has completed sign up process.'
     )
     # endregion
 
