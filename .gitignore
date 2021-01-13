@@ -25,7 +25,7 @@ __pycache__/
 *.log
 # Environments
 *.env
-!*.example.env
+!*example.env
 *.ini
 !*.example.ini
 venv/
