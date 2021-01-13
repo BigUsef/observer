@@ -96,6 +96,18 @@ DATABASES = {
 }
 
 
+# Cash settings
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": config('REDIS_URL'),
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
+
+
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 
@@ -147,8 +159,17 @@ STATICFILES_DIRS = [
 
 
 # Email settings
-if DEBUG:
+DEFAULT_FROM_EMAIL = 'no-replay@observer.com'
+if TEST and DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+else:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = config('EMAIL_HOST')
+    EMAIL_HOST_USER = config('EMAIL_USER')
+    EMAIL_HOST_PASSWORD = config('EMAIL_PASS')
+    EMAIL_PORT = config('EMAIL_PORT', cast=int)
+    EMAIL_USE_TLS = config('EMAIL_TLS', cast=bool)
+    EMAIL_USE_SSL = config('EMAIL_SSL', cast=bool)
 
 
 # Django Rest Framework Settings
