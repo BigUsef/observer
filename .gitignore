@@ -1,0 +1,51 @@
+### System Files ###
+.DS_Store
+Thumbs.db
+.AppleDouble
+.LSOverride
+._*
+*~
+.Trash-*
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+
+### Text Editor and IDE ###
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+### Python ###
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.log
+# Environments
+*.env
+!*.example.env
+*.ini
+!*.example.ini
+venv/
+.venv/
+# C extensions
+*.so
+# Translations
+*.mo
+*.pot
+# pyenv
+.python-version
+# Django
+*.sqlite3
+media/
+staticfiles/
+*db.json
+# Flask
+instance/
+.webassets-cache
+
+### SASS and SCSS ###
+.sass-cache/
+*.css.map
