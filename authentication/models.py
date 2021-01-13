@@ -1,7 +1,9 @@
 from secrets import token_hex
+from uuid import uuid4
 
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin, Group as BaseGroup
+from django.core.cache import cache
 from django.core.mail import send_mail
 from django.core.validators import RegexValidator
 from django.db import models
@@ -126,6 +128,33 @@ class User(AbstractBaseUser, PermissionsMixin):
             recipient_list=[self.email],
             html_message=html_message,
             **kwargs
+        )
+
+    def send_activation_email(self) -> None:
+        """
+        set user information in cash and send activation email to user
+        """
+        cache_id = uuid4()
+        user_obj = {
+            'id': self.id,
+            'username': self.username,
+            'first_name': self.first_name,
+            'last_name': self.last_name,
+            'email': self.email
+        }
+        # save user data on cache and set valid timeout to 1 day
+        cache.set(cache_id, user_obj, timeout=86400)
+
+        # send email
+        self.send_email(
+            subject='Welcome on board',
+            template='email/account_activation.html',
+            context={
+                'code': cache_id,
+                'name': self.full_name if self.full_name else self.username
+            },
+            message='',
+            from_email='verification@observer.com'
         )
 
 
