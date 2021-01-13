@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # Project installed apps
+    'authentication.apps.UsersConfig',
 ]
 
 MIDDLEWARE = [
@@ -54,6 +56,10 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'root.urls'
+
+AUTH_USER_MODEL = 'authentication.User'
+
+WSGI_APPLICATION = 'root.wsgi.application'
 
 TEMPLATES = [
     {
@@ -70,8 +76,6 @@ TEMPLATES = [
         },
     },
 ]
-
-WSGI_APPLICATION = 'root.wsgi.application'
 
 
 # Database
@@ -137,3 +141,9 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
+
+
+# Email settings
+
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
